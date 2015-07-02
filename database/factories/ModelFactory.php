@@ -15,7 +15,20 @@ $factory->define(App\User::class, function ($faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
-        'password' => str_random(10),
-        'remember_token' => str_random(10),
+        'password' => bcrypt('noman143'),
+        'remember_token' => '',
+    ];
+});
+
+
+$factory->define(App\Task::class, function ($faker) {
+
+    $end_date = \Carbon\Carbon::now()->addDays(rand(1,3))->toDateString();
+
+    return [
+        'task' => $faker->realText(100),
+        'start_date' => date('Y-m-d'),
+        'end_date' => $end_date,
+        'user_id' => rand(1,25),
     ];
 });
