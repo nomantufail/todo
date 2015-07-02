@@ -51,15 +51,12 @@ class Task extends Model
     }
 
     /**
-     * this function returns formatted text of headers
+     * this function returns array of formatted text of headers
      **/
     public function getFormattedHeaders()
     {
         return array(
-            'id'=>'Task#',
-            'task'=>'Task',
-            'start_date'=>'Start Date',
-            'end_date'=>'End Date',
+            'id'=>'Task#'
         );
     }
 

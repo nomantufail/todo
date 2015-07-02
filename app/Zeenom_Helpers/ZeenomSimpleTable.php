@@ -64,7 +64,16 @@ class ZeenomSimpleTable {
         {
             if(sizeof($this->objects) > 0)
             {
-                $this->formattedHeaders = $this->objects[0]->getFormattedHeaders();
+                $model_defined_formatted_headers = array();
+                if(method_exists($this->objects[0], 'getFormattedHeaders'))
+                    $model_defined_formatted_headers = $this->objects[0]->getFormattedHeaders();
+
+                $formattedHeaders = array();
+                foreach($this->viewables as $viewable)
+                {
+                    $formattedHeaders[$viewable] = (isset($model_defined_formatted_headers[$viewable]))?$model_defined_formatted_headers[$viewable]: $this->beautify_property($viewable);
+                }
+                $this->formattedHeaders = $formattedHeaders;
             }
             else
             {
@@ -230,6 +239,14 @@ class ZeenomSimpleTable {
             $properties = $object->get_money_properties();
         }
         return $properties;
+    }
+
+    public  function beautify_property($property)
+    {
+        $p_parts = explode('_',$property);
+        $property = join(' ',$p_parts);
+        $property = ucwords($property);
+        return $property;
     }
 
     public function noRecordFound()

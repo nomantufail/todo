@@ -9,5 +9,4 @@
  <h1 style="text-align: center">All Tasks</h1>
  <?php
 
-       $table = new \App\Zeenom_Helpers\ZeenomSimpleTable($tasks);
-       $table->draw();
+       $tasks_table->draw();

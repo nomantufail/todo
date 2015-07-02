@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Zeenom_Helpers\ZeenomSimpleTable;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -33,7 +34,7 @@ class TasksController extends ParentController
                         ->get();
 
         return view('tasks.all')
-            ->with('tasks',$tasks);
+                    ->with('tasks_table',new ZeenomSimpleTable($tasks));
     }
 
     /**
