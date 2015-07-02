@@ -224,7 +224,10 @@ class ZeenomSimpleTable {
         if(sizeof($objects) > 0)
         {
             $object = $objects[0];
-            $properties = $object->get_addable_properties();
+            if(method_exists($object, 'get_addable_properties'))
+                $properties = $object->get_addable_properties();
+            else
+                $properties = array();
         }
         return $properties;
     }
@@ -236,7 +239,10 @@ class ZeenomSimpleTable {
         if(sizeof($objects) > 0)
         {
             $object = $objects[0];
-            $properties = $object->get_money_properties();
+            if(method_exists($object, 'get_money_properties'))
+                $properties = $object->get_money_properties();
+            else
+                $properties = array();
         }
         return $properties;
     }

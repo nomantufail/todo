@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Task extends ParentModel
 {
     //
 
@@ -65,19 +65,19 @@ class Task extends Model
      * addable and there sums will be shown
      * in the footer of the table.
      **/
-    public function get_addable_properties()
+    /*public function get_addable_properties()
     {
         return array();
-    }
+    }*/
 
     /**
      * this function returns those properties which
      * are money and will be displayed in money formats
      **/
-    public function get_money_properties()
+    /*public function get_money_properties()
     {
         return array();
-    }
+    }*/
 
     /**
      * below function returns the formatted value of a property
