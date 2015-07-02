@@ -12,6 +12,7 @@ namespace App\Zeenom_Helpers;
 class ZeenomSimpleTable {
     public $objects;
     public $viewables;
+    public $hiddenFromViewers;
     public $formattedHeaders;
     public $classes;
 
@@ -24,6 +25,7 @@ class ZeenomSimpleTable {
     public function __construct($objects, $viewables = null)
     {
         $this->objects = $objects;
+        $this->setHiddenFromViewers();
         $this->setViewables($viewables);
         $this->setFormattedHeaders();
         $this->classes ="table";
@@ -45,11 +47,56 @@ class ZeenomSimpleTable {
         {
             if(sizeof($this->objects) > 0)
             {
-                $this->viewables = $this->objects[0]->getViewables();
+                $viewables = array();
+                if(method_exists($this->objects[0], 'getViewables') && sizeof($this->objects[0]->getViewables()) > 0)
+                {
+                    foreach($this->objects[0]->getViewables() as $v)
+                    {
+                        if(!in_array($v, $this->get_hiddenFromViewers_properties()))
+                            array_push($viewables, $v);
+                    }
+                    $viewables = $this->objects[0]->getViewables();
+                }
+                else
+                {
+                    $arr = $this->objects[0]->toArray();
+
+                    foreach($arr as $key => $value)
+                    {
+                        if(!in_array($key, $this->get_hiddenFromViewers_properties()))
+                            array_push($viewables, $key);
+                    }
+                }
+
+                $this->viewables = $viewables;
             }
             else
             {
                 $this->viewables = null;
+            }
+        }
+    }
+    public function setHiddenFromViewers($hidden = null)
+    {
+        if($hidden != null)
+        {
+            $this->hiddenFromViewers = $hidden;
+        }
+        else
+        {
+            if(sizeof($this->objects) > 0)
+            {
+                $hidden = array();
+                if(method_exists($this->objects[0], 'getHiddenFromViewers') && sizeof($this->objects[0]->getHiddenFromViewers()) > 0)
+                {
+                    $hidden = $this->objects[0]->getHiddenFromViewers();
+                }
+
+                $this->hiddenFromViewers = $hidden;
+            }
+            else
+            {
+                $this->hiddenFromViewers = null;
             }
         }
     }
@@ -85,6 +132,10 @@ class ZeenomSimpleTable {
     public function get_viewable_properties()
     {
         return $this->viewables;
+    }
+    public function get_hiddenFromViewers_properties()
+    {
+        return $this->hiddenFromViewers;
     }
     public function get_formatted_version($property)
     {

@@ -20,7 +20,7 @@ class Task extends ParentModel
      *
      * @var array
      */
-    protected $fillable = ['task', 'start_date', 'end_date', 'user_id'];
+    protected $fillable = [];
 
     /**
      * this property knows the money format you gonna use for your
@@ -33,7 +33,7 @@ class Task extends ParentModel
      **/
     public function getDates()
     {
-        return ['created_at','updated_at', 'start_date','end_date'];
+        return ['created_at','updated_at'];
     }
 
     /**
@@ -42,12 +42,16 @@ class Task extends ParentModel
      **/
     public function getViewables()
     {
-        return array(
-            'id',
-            'task',
-            'start_date',
-            'end_date',
-        );
+        return array();
+    }
+
+    /**
+     * this function returns properties which must
+     * not be shown in the view table
+     **/
+    public function getHiddenFromViewers()
+    {
+        return array('created_at','updated_at');
     }
 
     /**
@@ -56,7 +60,7 @@ class Task extends ParentModel
     public function getFormattedHeaders()
     {
         return array(
-            'id'=>'Task#'
+            'id'=>'Id'
         );
     }
 
@@ -82,8 +86,8 @@ class Task extends ParentModel
     /**
      * below function returns the formatted value of a property
      **/
-    public function getTask_VIEW()
+    public function getId_VIEW()
     {
-        return ucfirst($this->task);
+        return ucfirst($this->id);
     }
 }
