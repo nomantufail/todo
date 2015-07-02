@@ -12,12 +12,14 @@
 */
 
 Route::get('/', function () {
-
-    $users = factory('App\User', 25)->make();
-    dd($users->toArray());
     return view('welcome');
 });
 
+//Tasks routes
+Route::get('/tasks','TasksController@index');
+
+//default home route
+Route::get('/home','TasksController@index');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
