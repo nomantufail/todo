@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends ParentModel
 {
-    //
 
     /**
      * The database table used by the model.
@@ -17,41 +16,56 @@ class Task extends ParentModel
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['user_id','task','start_date','end_date'];
 
-    /**
-     * this property knows the money format you gonna use for your
-     * monetry attributes
-     **/
-    public $money_format = 'rupee';
-
-    /**
-     * this function returns date properties of this model
-     **/
-    public function getDates()
+    public function user()
     {
-        return ['created_at','updated_at'];
+        return $this->belongsTo('App\User');
     }
 
     /**
-     * this function returns properties which will
-     * be shown in the view table
-     **/
+     * this function get the view able columns for the html table
+     * @return mixed
+     */
     public function getViewables()
     {
         return array();
     }
 
-    /**
-     * this function returns properties which must
-     * not be shown in the view table
-     **/
-    public function getHiddenFromViewers()
+    public function getDates()
     {
-        return array('created_at','updated_at');
+        return ['created_at','updated_at','start_date','end_date'];
+    }
+
+    /**
+     * this function returns those properties which are
+     * addable and there sums will be shown
+     * in the footer of the table.
+     **/
+
+    public function get_addable_properties()
+    {
+        return array();
+    }
+
+    /**
+     * this function returns those properties which
+     * are money and will be displayed in money formats
+     **/
+    public function get_money_properties()
+    {
+        return array('id');
+    }
+
+    /**
+     * this function returns those properties
+     * which are hidden from viewers
+     **/
+    public function getHiddenProperties()
+    {
+        return array('user_id');
     }
 
     /**
@@ -63,25 +77,6 @@ class Task extends ParentModel
             'id'=>'Id'
         );
     }
-
-    /**
-     * this function returns those properties which are
-     * addable and there sums will be shown
-     * in the footer of the table.
-     **/
-    /*public function get_addable_properties()
-    {
-        return array();
-    }*/
-
-    /**
-     * this function returns those properties which
-     * are money and will be displayed in money formats
-     **/
-    /*public function get_money_properties()
-    {
-        return array();
-    }*/
 
     /**
      * below function returns the formatted value of a property

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Zeenom_Helpers\Sort;
 use App\Zeenom_Helpers\ZeenomSimpleTable;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use DB;
 
 class TasksController extends ParentController
 {
@@ -27,11 +31,9 @@ class TasksController extends ParentController
      *
      * @return Response
      */
-    public function index()
+    public function index(Task $task)
     {
-        $tasks = $this->task
-                    ->where('user_id','=',$this->auth_user->id)
-                        ->get();
+        $tasks = $this->auth_user->tasks()->sort()->get(['i']);
 
         return view('tasks.all')
                     ->with('tasks_table',new ZeenomSimpleTable($tasks));
@@ -44,7 +46,7 @@ class TasksController extends ParentController
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -52,9 +54,11 @@ class TasksController extends ParentController
      *
      * @return Response
      */
-    public function store()
+    public function store(Requests\SaveTaskRequest $request)
     {
-        //
+        $task = new Task($request->all());
+        $this->auth_user->tasks()->save($task);
+        return Redirect::route('show_tasks');
     }
 
     /**

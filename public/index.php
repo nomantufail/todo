@@ -35,6 +35,14 @@ require __DIR__.'/../bootstrap/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
+
+/*
+|--------------------------------------------------------------------------
+| Custom libraries by Zeenom Labs
+|--------------------------------------------------------------------------
+*/
+include_once(public_path('libs/php/helper.php'));
+
 /*
 |--------------------------------------------------------------------------
 | Run The Application

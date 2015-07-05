@@ -317,9 +317,7 @@ class ZeenomSimpleTable {
         $header.= "<tr class='table_row table_header_row'>";
         foreach($this->get_viewable_properties() as $property)
         {
-            $header.= "<th>";
-            $header.= $this->get_formatted_version($property);
-            $header.= "</th>";
+            $header.= sortable_header($property,'string',$this->get_formatted_version($property));
         }
         $header.= "</tr>";
         $header.= "</thead>";

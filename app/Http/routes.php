@@ -16,7 +16,9 @@ Route::get('/', function () {
 });
 
 //Tasks routes
-Route::get('/tasks','TasksController@index');
+Route::get('/tasks',['as'=>'show_tasks', 'uses'=>'TasksController@index']);
+Route::get('/task/create','TasksController@create');
+Route::post('/task/save',['as'=>'save_task', 'uses'=>'TasksController@store']);
 
 //default home route
 Route::get('/home','TasksController@index');

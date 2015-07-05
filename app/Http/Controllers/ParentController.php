@@ -9,9 +9,12 @@ use App\Http\Controllers\Controller;
 
 class ParentController extends Controller
 {
+    protected $request;
     public function __construct()
     {
         //calling middlewares
         $this->middleware('auth');
+
+        $this->request = new Request();
     }
 }
