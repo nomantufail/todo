@@ -11,7 +11,7 @@ class Tasks_Table_Seeder extends Seeder
      */
     public function run()
     {
-        $tasks = factory('App\Task', 5000)->make();
+        $tasks = factory('App\Task', 1000)->make();
         DB::table('tasks')->insert($tasks->toArray());
     }
 }

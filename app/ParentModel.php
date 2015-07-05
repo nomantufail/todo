@@ -190,9 +190,9 @@ class ParentModel extends Model
         {
             return $query->orderBy($sort->by(), $sort->order());
         }
-        $sort_model = new SortModel();
-        $columns = $sort_model->where('view','=',$this->table)->get();
 
+        $sort_model = new SortModel();
+        $columns = $sort_model->where('view','=',$this->table)->get(['id','view','sort_by','order_by']);
         if(sizeof($columns) > 0)
         {
             foreach($columns as $column)

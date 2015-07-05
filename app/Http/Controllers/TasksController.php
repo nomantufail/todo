@@ -33,7 +33,7 @@ class TasksController extends ParentController
      */
     public function index(Task $task)
     {
-        $tasks = $this->auth_user->tasks()->sort()->get(['i']);
+        $tasks = $this->auth_user->tasks()->sort()->get();
 
         return view('tasks.all')
                     ->with('tasks_table',new ZeenomSimpleTable($tasks));
