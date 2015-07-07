@@ -6,9 +6,12 @@
  * Time: 4:52 AM
  */
  ?>
- <link rel="stylesheet" href="/libs/css/bootstrap/bootstrap.min.css">
+ @extends('parent')
+
+ @section('site-content')
 
  <h1 style="text-align: center">All Tasks</h1>
- <?php
 
-       $tasks_table->draw();
+  {{$tasks_table->draw()}}
+
+@endsection

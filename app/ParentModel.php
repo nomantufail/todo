@@ -15,6 +15,7 @@ class ParentModel extends Model
     protected $addableProperties = [];
     protected $moneyAttributes = [];
     protected $sortableColumns = [];
+    public $editDelete = true;
 
     /**
      * this property knows the money format you gonna use for your

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Task extends ParentModel
 {
@@ -56,7 +57,7 @@ class Task extends ParentModel
      **/
     public function get_money_properties()
     {
-        return array('id');
+        return array();
     }
 
     /**
@@ -79,10 +80,18 @@ class Task extends ParentModel
     }
 
     /**
+     * this function returns array of formatted text of headers
+     **/
+    public function getEditDelete()
+    {
+        return true;
+    }
+
+    /**
      * below function returns the formatted value of a property
      **/
     public function getId_VIEW()
     {
-        return ucfirst($this->id);
+        return $this->id;
     }
 }

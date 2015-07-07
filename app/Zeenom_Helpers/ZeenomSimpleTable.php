@@ -214,6 +214,7 @@ class ZeenomSimpleTable {
     public function process_property($object, $property)
     {
         $viewable_value = $this->get_viewable_value($object, $property);
+
         if(in_array($property, $this->get_money_properties()))
         {
             $viewable_value = rupee_format($viewable_value);
@@ -306,6 +307,16 @@ class ZeenomSimpleTable {
         return $property;
     }
 
+    public function getEditDelete()
+    {
+        $editDelete = true;
+        if(method_exists($this->objects[0],'getEditDelete'))
+            $editDelete = $this->objects[0]->getEditDelete();
+        else
+            $editDelete = $this->objects[0]->editDelete;
+
+        return $editDelete;
+    }
     public function noRecordFound()
     {
         echo"No Record Found";
@@ -318,6 +329,10 @@ class ZeenomSimpleTable {
         foreach($this->get_viewable_properties() as $property)
         {
             $header.= sortable_header($property,'string',$this->get_formatted_version($property));
+        }
+        if($this->getEditDelete() == true)
+        {
+            $header.='<th class="column_heading">Actions</th>';
         }
         $header.= "</tr>";
         $header.= "</thead>";
@@ -337,6 +352,10 @@ class ZeenomSimpleTable {
                     $body.= $this->process_property($object, $property);
                     $body.= "</td>";
 
+                }
+                if($this->getEditDelete() == true)
+                {
+                    $body.='<td class=""><a href="#">Edit</a> | <a href="#" onclick="return confirm_deleting();" style="color: red;">Delete</a></td>';
                 }
                 $body.= "</tr>";
             }
@@ -358,6 +377,10 @@ class ZeenomSimpleTable {
                 $footer.= $this->get_footer_value_of($property);
                 $footer.= "</th>";
             }
+            if($this->getEditDelete() == true)
+            {
+                $footer.='<td class=""></td>';
+            }
             $footer.= "</tr>";
         }
 
@@ -368,6 +391,7 @@ class ZeenomSimpleTable {
     {
         if(sizeof($this->objects) > 0)
         {
+            echo $this->scripts();
             echo "<table class='".$this->classes." my_table list_table table-bordered'>";
             echo $this->header();
             echo $this->body();
@@ -378,5 +402,27 @@ class ZeenomSimpleTable {
         {
             $this->noRecordFound();
         }
+    }
+
+    /**
+     * Javascript start here..
+     **/
+    public function scripts()
+    {
+        $s = '<script>';
+        $reflect = basename(str_replace('\\', '/', get_class($this->objects[0])));
+        $s.= $this->confirm_deleting('Are you sure you want to delete this '.get_class_name($this->objects[0]));
+        $s.='</script>';
+
+        return $s;
+    }
+
+    public function confirm_deleting($msg)
+    {
+        $data = "function confirm_deleting()";
+        $data.="{";
+        $data .= "if(confirm('".$msg."') == true){return true;}else{return false;}";
+        $data.="}";
+        return $data;
     }
 } 
