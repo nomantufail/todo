@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commands\CreateTaskCommand;
+use App\CurrentUserTasksCollection;
 use App\Task;
 use App\Zeenom_Helpers\Sort;
 use App\Zeenom_Helpers\ZeenomSimpleTable;
@@ -15,19 +16,12 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use DB;
-use App\CurrentUser;
 
 class TasksController extends ParentController
 {
-    private $task;
-    private $auth_user;
-    public function __construct(Task $task, CurrentUser $currentUser)
+    public function __construct()
     {
-        dd($currentUser->user->toArray());
         parent::__construct();
-
-        $this->task = $task;
-        $this->auth_user = Auth::user();
     }
 
     /**
@@ -35,12 +29,9 @@ class TasksController extends ParentController
      *
      * @return Response
      */
-    public function index(Task $task)
+    public function index(CurrentUserTasksCollection $tasks)
     {
-        $tasks = $this->auth_user->tasks()->sort()->get();
-
-        return view('tasks.all')
-                    ->with('tasks_table',new ZeenomSimpleTable($tasks));
+        return view('tasks.all')->with('tasks_table',new ZeenomSimpleTable($tasks->get()));
     }
 
     /**
@@ -61,7 +52,6 @@ class TasksController extends ParentController
     public function store(SaveTaskRequest $request)
     {
         $this->dispatch(new CreateTaskCommand($request));
-        dd('System.pause');
         return Redirect::route('show_tasks');
     }
 

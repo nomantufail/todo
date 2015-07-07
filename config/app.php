@@ -144,7 +144,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\CurrentUserServiceProvider::class,
+        App\Providers\CurrentUserTasksCollectionServiceProvider::class,
 
     ],
 
