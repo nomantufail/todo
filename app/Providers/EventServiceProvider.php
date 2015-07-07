@@ -13,8 +13,16 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+//        'App\Events\SomeEvent' => [
+//            'App\Listeners\EventListener',
+//        ],
+        'App\Events\TaskWasCreated'=>[
+            'App\Listeners\SendEmailToUser',
+            'App\Listeners\LogThisTaskToDb',
+        ],
+        'App\Events\EmailWasSent'=>[
+            'App\Listeners\DecrementRemainingEmails',
+            'App\Listeners\RouteUserToSomeWhereElse',
         ],
     ];
 

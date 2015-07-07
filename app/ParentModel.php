@@ -186,9 +186,11 @@ class ParentModel extends Model
     public function scopeSort($query)
     {
         $sort = new Sort($this->table);
+        $sortable_columns = $this->getSortableColumns();
         if($sort->by() != '')
         {
-            return $query->orderBy($sort->by(), $sort->order());
+            if(in_array($sort->by(), $sortable_columns))
+                return $query->orderBy($sort->by(), $sort->order());
         }
 
         $sort_model = new SortModel();
