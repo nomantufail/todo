@@ -307,9 +307,9 @@ class ZeenomSimpleTable {
         return $property;
     }
 
-    public function getActions()
+    public function getActions($object)
     {
-        return $this->objects[0]->getActions();
+        return $object->getActions();
     }
 
     public function allowActions()
@@ -356,7 +356,7 @@ class ZeenomSimpleTable {
                 }
                 if($this->allowActions() == true)
                 {
-                    $body.="<td>".$this->getActions()."</td>";
+                    $body.="<td>".$this->getActions($object)."</td>";
                 }
                 $body.= "</tr>";
             }

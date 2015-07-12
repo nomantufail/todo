@@ -21,6 +21,10 @@ Route::get('/task/create','TasksController@create');
 Route::post('/task/save',['as'=>'save_task', 'uses'=>'TasksController@store']);
 Route::get('/task/{id}/delete','TasksController@destroy');
 
+//customer routes
+Route::get('/customers',['as'=>'show_customers', 'uses'=>'CustomersController@Index']);
+Route::get('/customers/delete/{id}','CustomersController@destroy');
+
 //default home route
 Route::get('/home','TasksController@index');
 

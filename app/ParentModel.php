@@ -220,7 +220,7 @@ class ParentModel extends Model
 
     public function _getDelete($route = '', $text = 'Del')
     {
-        $link =  "<a href='".$route."'>".$text."</a>";
+        $link =  "<a onclick='return confirm_deleting()' href='".$route."'>".$text."</a>";
         return $link;
     }
 

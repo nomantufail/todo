@@ -9,8 +9,14 @@
 namespace App\Zeenom_Helpers;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 class RouteHelper {
+
+    public static function site()
+    {
+        return URL::to('/')."/";
+    }
 
     public static function currentController()
     {

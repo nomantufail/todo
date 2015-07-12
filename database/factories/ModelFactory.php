@@ -32,3 +32,11 @@ $factory->define(App\Task::class, function ($faker) {
         'user_id' => rand(1,25),
     ];
 });
+
+$factory->define(App\Customer::class, function($faker){
+    return [
+        'name'=>$faker->name,
+        'address' => $faker->address,
+        'phone' =>$faker->phoneNumber
+    ];
+});
