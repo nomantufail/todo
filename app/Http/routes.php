@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::get('/tasks',['as'=>'show_tasks', 'uses'=>'TasksController@index']);
 Route::get('/task/create','TasksController@create');
 Route::post('/task/save',['as'=>'save_task', 'uses'=>'TasksController@store']);
+Route::get('/task/{id}/delete','TasksController@destroy');
 
 //default home route
 Route::get('/home','TasksController@index');

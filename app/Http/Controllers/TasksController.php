@@ -7,6 +7,7 @@ use App\CurrentUserTasksCollection;
 use App\Task;
 use App\Zeenom_Helpers\Sort;
 use App\Zeenom_Helpers\ZeenomSimpleTable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,12 +17,16 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use DB;
+use Mockery\CountValidator\Exception;
 
 class TasksController extends ParentController
 {
-    public function __construct()
+    public $task;
+    public function __construct(Task $task)
     {
         parent::__construct();
+
+        $this->task = $task;
     }
 
     /**
@@ -96,6 +101,17 @@ class TasksController extends ParentController
      */
     public function destroy($id)
     {
-        //
+        try
+        {
+            $task = Auth::user()->tasks()->findOrFail($id);
+            $task->delete();
+            return Redirect::route('show_tasks');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Redirect::route('show_tasks');
+        }
+
+
     }
 }

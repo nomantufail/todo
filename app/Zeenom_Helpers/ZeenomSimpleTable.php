@@ -307,20 +307,21 @@ class ZeenomSimpleTable {
         return $property;
     }
 
-    public function getEditDelete()
+    public function getActions()
     {
-        $editDelete = true;
-        if(method_exists($this->objects[0],'getEditDelete'))
-            $editDelete = $this->objects[0]->getEditDelete();
-        else
-            $editDelete = $this->objects[0]->editDelete;
-
-        return $editDelete;
+        return $this->objects[0]->getActions();
     }
+
+    public function allowActions()
+    {
+        return $this->objects[0]->allowActions();
+    }
+
     public function noRecordFound()
     {
         echo"No Record Found";
     }
+
     public function header()
     {
         $header = "";
@@ -330,7 +331,7 @@ class ZeenomSimpleTable {
         {
             $header.= sortable_header($property,'string',$this->get_formatted_version($property));
         }
-        if($this->getEditDelete() == true)
+        if($this->allowActions() == true)
         {
             $header.='<th class="column_heading">Actions</th>';
         }
@@ -353,9 +354,9 @@ class ZeenomSimpleTable {
                     $body.= "</td>";
 
                 }
-                if($this->getEditDelete() == true)
+                if($this->allowActions() == true)
                 {
-                    $body.='<td class=""><a href="#">Edit</a> | <a href="#" onclick="return confirm_deleting();" style="color: red;">Delete</a></td>';
+                    $body.="<td>".$this->getActions()."</td>";
                 }
                 $body.= "</tr>";
             }
@@ -377,7 +378,7 @@ class ZeenomSimpleTable {
                 $footer.= $this->get_footer_value_of($property);
                 $footer.= "</th>";
             }
-            if($this->getEditDelete() == true)
+            if($this->allowActions() == true)
             {
                 $footer.='<td class=""></td>';
             }

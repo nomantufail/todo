@@ -26,6 +26,33 @@ class Task extends ParentModel
         return $this->belongsTo('App\User');
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* -----------------------------------------------------------------------------------\
+     *              OPTIONAL CUSTOMIZABLE AREA STARTS
+     * ----------------------------------------------------------------------------------*/
+
     /**
      * this function get the view able columns for the html table
      * @return mixed
@@ -79,19 +106,54 @@ class Task extends ParentModel
         );
     }
 
+    /** ------------------------------- ACTIONS AREA STARTS HERE ----------------------------- **/
+    /* ---------- All your actions markup e.g(delete, edit) resides here) ------------*/
+    public function getActions()
+    {
+        $markup = '';
+
+        $markup.= $this->getEdit();
+        $markup.= " | ";
+        $markup.= $this->getDelete();
+
+        return $markup;
+    }
+
     /**
      * this function returns array of formatted text of headers
      **/
-    public function getEditDelete()
+    public function getEdit()
     {
-        return true;
+        return $this->_getEdit($this->getEditRoute(), $this->getEditText());
     }
+    public function getDelete()
+    {
+        return $this->_getDelete($this->getDeleteRoute(), $this->getDeleteText());
+    }
+
+    public function getEditRoute()
+    {
+        return '#';
+    }
+    public function getDeleteRoute()
+    {
+        return '#';
+    }
+    public function getEditText()
+    {
+        return 'Edit';
+    }
+    public function getDeleteText()
+    {
+        return 'Del';
+    }
+    /*------------------------------- Actions Markup Ends -------------------------------------------*/
 
     /**
      * below function returns the formatted value of a property
      **/
-    public function getId_VIEW()
+    /*public function getId_VIEW()
     {
         return $this->id;
-    }
+    }*/
 }

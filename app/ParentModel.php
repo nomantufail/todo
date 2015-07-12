@@ -2,8 +2,11 @@
 
 namespace App;
 
+use App\Zeenom_Helpers\RouteHelper;
 use Illuminate\Database\Eloquent\Model;
 use App\Zeenom_Helpers\Sort;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class ParentModel extends Model
 {
@@ -15,7 +18,8 @@ class ParentModel extends Model
     protected $addableProperties = [];
     protected $moneyAttributes = [];
     protected $sortableColumns = [];
-    public $editDelete = true;
+
+    public $allowActions = true;
 
     /**
      * this property knows the money format you gonna use for your
@@ -182,6 +186,51 @@ class ParentModel extends Model
     public function setSortableColumns($sortableColumns)
     {
         $this->sortableColumns = $sortableColumns;
+    }
+
+    /**
+     * this functions tells weather a table will show edit delete etc
+     * actions or not.
+     * just return true or false
+     **/
+    public function allowActions()
+    {
+        return $this->allowActions;
+    }
+
+    /**
+     *  Below function used to return html for actions column
+     *  in the view.
+     **/
+    public function getActions()
+    {
+        $markup = '';
+
+        $markup.= $this->_getEdit($this->getEditRoute());
+        $markup.= $this->_getDelete($this->getEditRoute());
+
+        return $markup;
+    }
+
+    public function _getEdit($route = '#', $text = 'Edit')
+    {
+        $link =  "<a href='".$route."'>".$text."</a>";
+        return $link;
+    }
+
+    public function _getDelete($route = '', $text = 'Del')
+    {
+        $link =  "<a href='".$route."'>".$text."</a>";
+        return $link;
+    }
+
+    public function getEditRoute()
+    {
+        return '#';
+    }
+    public function getDeleteRoute()
+    {
+        return '#';
     }
 
     public function scopeSort($query)
